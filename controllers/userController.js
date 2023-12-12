@@ -213,6 +213,29 @@ const userController = {
       });
     }
   },
+
+  checkAuth: async (req, res) => {
+    const token = req.headers?.authorization?.split(" ")[1];
+    console.log(token);
+    try {
+      const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
+      const user = await userModel.findById(decoded.id);
+      if (!user) {
+        return res.status(400).json({
+          message: "Tài khoản không tồn tại",
+        });
+      }
+      return res.status(200).json({
+        message: "Lấy thành công",
+        user,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: "Lấy thất bại",
+        error,
+      });
+    }
+  },
 };
 
 module.exports = userController;
