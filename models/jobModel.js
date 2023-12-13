@@ -15,6 +15,9 @@ const jobSchema = new mongoose.Schema(
     jobSkills: String,
     jobStatus: Boolean,
     wotkingForm: String,
+    ot: String,
+    scale: String,
+    salary: String,
     jobApplied: [
       {
         userId: {

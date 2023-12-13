@@ -3,12 +3,12 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const { authenticateToken, isAdmin } = require("../middleware/auth");
 
-router.post("/check-auth", userController.checkAuth);
+router.post("/check-auth", authenticateToken, userController.checkAuth);
 router.post("/login", userController.login);
 router.post("/register", userController.register);
 router.get("/:username", authenticateToken, userController.getUser);
 router.put("/:username", authenticateToken, userController.updateUser);
-router.put(
+router.patch(
   "/:username/editPassword",
   authenticateToken,
   userController.editPassword

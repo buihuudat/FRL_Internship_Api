@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     birthday: {
       type: Date,
     },
+    description: String,
     social: {
       type: String,
     },
@@ -35,11 +36,15 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
+      default: "",
     },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+    social: {
+      type: String,
     },
   },
   { timestamps: true }

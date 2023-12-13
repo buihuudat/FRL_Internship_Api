@@ -22,7 +22,7 @@ const userController = {
           message: "Mật khẩu không đúng",
         });
       }
-      const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET_KEY, {
+      const token = jwt.sign({ user }, process.env.TOKEN_SECRET_KEY, {
         expiresIn: "12h",
       });
 
@@ -107,19 +107,17 @@ const userController = {
 
   updateUser: async (req, res) => {
     const { username } = req.params;
-    const { name, avatar, password } = req.body;
+    const { name, avatar, phone, birthday } = req.body;
     try {
-      const user = await userModel.findOne({ username: username });
+      const user = await userModel.findOneAndUpdate(
+        { username: username },
+        req.body,
+        { new: true }
+      );
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",
         });
-      }
-      if (name) {
-        user.name = name;
-      }
-      if (avatar) {
-        user.avatar = avatar;
       }
 
       await user.save();
@@ -215,11 +213,8 @@ const userController = {
   },
 
   checkAuth: async (req, res) => {
-    const token = req.headers?.authorization?.split(" ")[1];
-    console.log(token);
     try {
-      const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
-      const user = await userModel.findById(decoded.id);
+      const user = await userModel.findById(req.decoded.user._id);
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",

@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 const authenticateToken = (req, res, next) => {
-  const token = req.header("Authorization");
+  const token = req.header("Authorization").split(" ")[1];
   if (!token) {
     return res.status(401).json({
       message: "Bạn không có quyền truy cập",
     });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(401).json({
         message: "Bạn không có quyền truy cập",
@@ -20,7 +20,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (req.decoded?.role && req.decoded?.role !== "admin") {
+  if (req.decoded?.user && req.decoded?.user?.role !== "admin") {
     return res.status(403).json({
       message: "Bạn không có quyền",
     });
