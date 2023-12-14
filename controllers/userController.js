@@ -22,7 +22,7 @@ const userController = {
           message: "Mật khẩu không đúng",
         });
       }
-      const token = jwt.sign({ user }, process.env.TOKEN_SECRET_KEY, {
+      const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET_KEY, {
         expiresIn: "12h",
       });
 
@@ -214,7 +214,7 @@ const userController = {
 
   checkAuth: async (req, res) => {
     try {
-      const user = await userModel.findById(req.decoded.user._id);
+      const user = await userModel.findById(req.decoded._id);
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",

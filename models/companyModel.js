@@ -6,18 +6,14 @@ const companySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
-      String,
-    },
+    address: String,
     image: String,
     model: String,
     scale: String,
     country: String,
-    ot: Boolean,
-    description: {
-      type: String,
-    },
-    site: String,
+    ot: String,
+    description: String,
+    website: String,
     social: String,
   },
   { timeseries: true }

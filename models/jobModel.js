@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema(
   {
-    compane: {
+    company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
     },
@@ -11,7 +11,6 @@ const jobSchema = new mongoose.Schema(
     jobDescription: String,
     jobType: String,
     jobLocation: String,
-    jobExperience: String,
     jobSkills: String,
     jobStatus: Boolean,
     wotkingForm: String,
