@@ -44,7 +44,7 @@ const adminController = {
 
   getJobs: async (req, res) => {
     try {
-      const jobs = await jobModel.find();
+      const jobs = await jobModel.find().populate("company");
       return res.status(200).json(jobs);
     } catch (error) {
       return res.status(500).json(error);

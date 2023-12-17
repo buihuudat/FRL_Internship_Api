@@ -24,7 +24,11 @@ const jobSchema = new mongoose.Schema(
           ref: "User",
         },
         fileName: String,
-        file: String,
+        file: {
+          name: String,
+          file: String,
+        },
+        textMore: String,
       },
     ],
   },

@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const cryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const userFileModel = require("../models/userFileModel");
 
 const userController = {
   login: async (req, res) => {
@@ -88,6 +89,25 @@ const userController = {
     const { username } = req.params;
     try {
       const user = await userModel.findOne({ username: username });
+      if (!user) {
+        return res.status(400).json({
+          message: "Tài khoản không tồn tại",
+        });
+      }
+      return res.status(200).json({
+        message: "Lấy thành công",
+        user,
+      });
+    } catch (error) {
+      return res.status(400).json({
+        message: "Lấy thất bại",
+        error,
+      });
+    }
+  },
+  getCVApplied: async (req, res) => {
+    try {
+      const user = await userFileModel.findOne({ user: req.params.userId });
       if (!user) {
         return res.status(400).json({
           message: "Tài khoản không tồn tại",
