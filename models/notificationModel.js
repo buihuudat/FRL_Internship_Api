@@ -11,6 +11,7 @@ const notificationModal = new mongoose.Schema(
         title: String,
         body: String,
         companyName: String,
+        jobTitle: String,
       },
     ],
   },

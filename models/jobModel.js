@@ -14,6 +14,7 @@ const jobSchema = new mongoose.Schema(
     jobSkills: String,
     jobStatus: Boolean,
     wotkingForm: String,
+    time: String,
     ot: String,
     scale: String,
     salary: String,

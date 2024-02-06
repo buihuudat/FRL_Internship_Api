@@ -22,6 +22,7 @@ const notificationController = {
         userId: req.body.userId,
       });
       if (!userNotification) {
+        console.log(req.body);
         await notificationModel.create({
           userId: req.body.userId,
           notifications: [
@@ -29,6 +30,7 @@ const notificationController = {
               title: "Ứng tuyển thành công",
               body: "Chúng tôi đã gửi CV đến doanh nghiệp",
               companyName: req.body.companyName,
+              jobTitle: req.body.jobTitle,
             },
           ],
         });
@@ -37,6 +39,7 @@ const notificationController = {
           title: "Ứng tuyển thành công",
           body: "Chúng tôi đã gửi CV đến doanh nghiệp",
           companyName: req.body.companyName,
+          jobTitle: req.body.jobTitle,
         });
         await userNotification.save();
       }
