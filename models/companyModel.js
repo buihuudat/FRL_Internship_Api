@@ -2,11 +2,22 @@ const mongoose = require("mongoose");
 
 const companySchema = new mongoose.Schema(
   {
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
+    },
     name: {
       type: String,
       required: true,
     },
-    address: String,
+    address: {
+      province: String,
+      district: String,
+      ward: String,
+      street: String,
+      house: String,
+    },
     image: String,
     model: String,
     scale: String,

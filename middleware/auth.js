@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
+const permessionAccess = ["admin", "company"];
 
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1];
@@ -23,11 +24,12 @@ const authenticateToken = (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   if (req.decoded?._id) {
     const user = await userModel.findById(req.decoded._id);
-    if (user.role !== "admin") {
+    if (!permessionAccess.includes(user.role)) {
       return res.status(403).json({
         message: "Bạn không có quyền",
       });
     }
+    req.role = user.role;
   }
   next();
 };
@@ -35,4 +37,5 @@ const isAdmin = async (req, res, next) => {
 module.exports = {
   authenticateToken,
   isAdmin,
+  permessionAccess,
 };

@@ -12,6 +12,14 @@ const notificationModal = new mongoose.Schema(
         body: String,
         companyName: String,
         jobTitle: String,
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+        viewed: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
   },

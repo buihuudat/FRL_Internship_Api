@@ -10,7 +10,12 @@ const jobSchema = new mongoose.Schema(
     jobTitle: String,
     jobDescription: String,
     jobType: String,
-    jobLocation: String,
+    jobLocation: {
+      province: String,
+      district: String,
+      ward: String,
+      street: String,
+    },
     jobLocation_str: String,
     jobSkills: String,
     jobStatus: Boolean,
@@ -19,20 +24,6 @@ const jobSchema = new mongoose.Schema(
     ot: String,
     scale: String,
     salary: String,
-    jobApplied: [
-      {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-        fileName: String,
-        file: {
-          name: String,
-          file: String,
-        },
-        textMore: String,
-      },
-    ],
   },
   { timestamps: true }
 );

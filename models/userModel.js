@@ -40,11 +40,17 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "admin", "company"],
       default: "user",
     },
     social: {
       type: String,
+    },
+    address: {
+      province: String,
+      district: String,
+      ward: String,
+      street: String,
     },
   },
   { timestamps: true }
