@@ -87,6 +87,23 @@ const userController = {
     }
   },
 
+  updateAddress: async (req, res) => {
+    console.log(req.body);
+    try {
+      const user = await userModel.findByIdAndUpdate(req.decoded._id, {
+        address: req.body.address,
+      });
+      if (!user) {
+        return res.status(400).json({
+          message: "Tài khoản không tồn tại",
+        });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  },
+
   editPassword: async (req, res) => {
     const { username } = req.params;
     try {
