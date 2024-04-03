@@ -51,7 +51,11 @@ const userSchema = new mongoose.Schema(
       district: String,
       ward: String,
       street: String,
+      lat: String,
+      lng: String,
     },
+
+    skills: [String],
   },
   { timestamps: true }
 );

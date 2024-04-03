@@ -104,6 +104,22 @@ const userController = {
     }
   },
 
+  updateSkills: async (req, res) => {
+    try {
+      const rs = await userModel.findByIdAndUpdate(req.decoded._id, {
+        skills: req.body.skills,
+      });
+      if (!rs) {
+        return res.status(400).json({
+          message: "Tài khoản không tồn tại",
+        });
+      }
+      return res.status(200).json(rs);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
   editPassword: async (req, res) => {
     const { username } = req.params;
     try {

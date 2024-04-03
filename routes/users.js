@@ -10,6 +10,8 @@ router.get("/jobs-applied", authenticateToken, userController.getJobsApplied);
 
 router.get("/:userId", authenticateToken, userController.getUser);
 
+router.put("/update-skills", authenticateToken, userController.updateSkills);
+
 router.put("/update-address", authenticateToken, userController.updateAddress);
 
 router.put("/:userId", authenticateToken, userController.updateUser);

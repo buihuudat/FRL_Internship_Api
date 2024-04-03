@@ -1,17 +1,34 @@
 const { OpenAI } = require("openai");
 const CryptoJS = require("crypto-js");
 const systemModel = require("../models/systemModel");
+const jobModel = require("../models/jobModel");
+const userModel = require("../models/userModel");
 
 const messageController = {
   askAi: async (req, res) => {
+    const jobs = await jobModel.find().select("_id");
+    const user = await userModel.findById(req.decoded._id);
+
     try {
       const messages = [
         {
           role: "system",
-          content: "Đây là cuộc trò chuyện về internship",
+          content: `Đây là cuộc trò chuyện về internship`,
         },
         {
           role: "system",
+          content: `Chỉ trả lời câu hỏi liên quan tới internship!`,
+        },
+        {
+          role: "system",
+          content: `Chỉ trả về những jobs có ở trong ${jobs}`,
+        },
+        {
+          role: "system",
+          content: `Trả về ${jobs} có jobSkills phù hợp với ${user} skills`,
+        },
+        {
+          role: "user",
           content: req.body.message,
         },
       ];
@@ -43,6 +60,48 @@ const messageController = {
       });
     } catch (error) {
       console.log(error);
+      return res.status(500).json(error);
+    }
+  },
+
+  getText: async (req, res) => {
+    try {
+      const messages = [
+        {
+          role: "system",
+          content: "Đây là cuộc trò chuyện về internship",
+        },
+        {
+          role: "user",
+          content: req.body.message,
+        },
+      ];
+
+      const key = await systemModel.findOne();
+      if (!key?.openaiKey) {
+        return res.status(200).json({
+          fromSelf: false,
+          message: "Invalid Open AI key",
+        });
+      }
+
+      const apiKey = CryptoJS.AES.decrypt(
+        key.openaiKey,
+        process.env.TOKEN_SECRET_KEY
+      ).toString(CryptoJS.enc.Utf8);
+
+      const openai = new OpenAI({ apiKey });
+
+      const response = await openai.chat.completions.create({
+        messages,
+        model: "gpt-3.5-turbo",
+      });
+
+      const aiRes = response.choices;
+      return res.status(200).json({
+        message: aiRes[0].message.content,
+      });
+    } catch (error) {
       return res.status(500).json(error);
     }
   },
