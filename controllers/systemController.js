@@ -5,7 +5,7 @@ const systemController = {
   updateOpenaiKey: async (req, res) => {
     try {
       const key = await systemModel.findOne({
-        openaiKey: req.body.openaiKey,
+        id: "aikey",
       });
 
       const newKey = CryptoJS.AES.encrypt(
@@ -15,6 +15,7 @@ const systemController = {
       if (!key) {
         const createNewKey = await systemModel.create({
           openaiKey: newKey,
+          id: "aikey",
         });
         return res.status(200).json({
           message: "Update openai key success",
@@ -34,7 +35,9 @@ const systemController = {
 
   getOpenaiKey: async (req, res) => {
     try {
-      const key = await systemModel.findOne();
+      const key = await systemModel.findOne({
+        id: "aikey",
+      });
       if (!key) {
         return res.status(404).json(null);
       }
