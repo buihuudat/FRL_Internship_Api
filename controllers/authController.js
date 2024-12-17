@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const cryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const chatHistoryModel = require("../models/ChatHistory");
 
 const authController = {
   login: async (req, res) => {
@@ -26,6 +27,8 @@ const authController = {
         expiresIn: "12h",
       });
 
+      await chatHistoryModel.findByIdAndDelete(user._id);
+
       return res.status(200).json({
         message: "Đăng nhập thành công",
         user: {
@@ -35,6 +38,7 @@ const authController = {
         token,
       });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         message: "Đăng nhập thất bại",
         error,

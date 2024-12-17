@@ -86,9 +86,7 @@ const notificationController = {
         return res.status(404).json({ message: "No notifications to update" });
       }
 
-      return res
-        .status(200)
-        .json({ message: "All notifications checked successfully" });
+      return res.status(200).json({ message: "Đã đánh dấu tất cả" });
     } catch (error) {
       return res.status(500).json({
         error,

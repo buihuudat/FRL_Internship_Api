@@ -35,6 +35,7 @@ const userController = {
   },
   getCVApplied: async (req, res) => {
     try {
+      console.log(req.params);
       const user = await userFileModel.findOne({ user: req.params.userId });
       if (!user) {
         return res.status(400).json({
