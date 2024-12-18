@@ -68,9 +68,7 @@ const messageController = {
       const systemMessages = [
         {
           role: "system",
-          content: `Hãy kết hợp các kỹ năng của người dùng (${
-            user.name
-          }) nếu kỹ năng của người dùng hay từ khoá tìm kiếm có liên quan đến jobs (${jobs
+          content: `Chỉ trả lời khi được hỏi, Hãy kết hợp các kỹ năng của người dùng (${user}) nếu kỹ năng của người dùng hay từ khoá tìm kiếm có liên quan đến jobs (${jobs
             .map((job) => job.jobTitle)
             .join(", ")}) và các công ty (${companies
             .map((company) => company.name)
